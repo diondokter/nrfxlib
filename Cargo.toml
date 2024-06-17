@@ -1,6 +1,6 @@
 [package]
 name = "nrfxlib"
-version = "0.6.0"
+version = "0.6.1"
 authors = ["Jonathan Pallant (42 Technology) <jonathan.pallant@42technology.com>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
@@ -18,3 +18,4 @@ linked_list_allocator = { version = "0.10", default-features = false, features =
 ] }
 log = "0.4"
 nrfxlib-sys = "=1.5.1"
+grounded = "0.2.0"

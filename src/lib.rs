@@ -169,6 +169,9 @@ pub fn init() -> Result<(), Error> {
 	}
 
 	// Tell nrf_modem what memory it can use.
+	static PARAMS: grounded::uninit::GroundedCell<nrfxlib_sys::nrf_modem_init_params> =
+		grounded::uninit::GroundedCell::uninit();
+
 	let params = sys::nrf_modem_init_params_t {
 		shmem: sys::nrf_modem_shmem_cfg {
 			ctrl: sys::nrf_modem_shmem_cfg__bindgen_ty_1 {
@@ -195,6 +198,8 @@ pub fn init() -> Result<(), Error> {
 		ipc_irq_prio: 0,
 	};
 
+	cortex_m::interrupt::free(|_| unsafe { PARAMS.get().write(params) });
+
 	unsafe {
 		// Use the same TX memory region as above
 		cortex_m::interrupt::free(|cs| {
@@ -206,7 +211,7 @@ pub fn init() -> Result<(), Error> {
 	}
 
 	// OK, let's start the library
-	let result = unsafe { sys::nrf_modem_init(&params, sys::nrf_modem_mode_t_NORMAL_MODE) };
+	let result = unsafe { sys::nrf_modem_init(PARAMS.get(), sys::nrf_modem_mode_t_NORMAL_MODE) };
 
 	// Was it happy?
 	if result < 0 {

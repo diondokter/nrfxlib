@@ -73,9 +73,16 @@ See [nrf9160-demo](https://github.com/42-technology-ltd/nrf9160-demo) for a demo
 
 ## Changelog
 
-### Unreleased Changes ([Source](https://github.com/42-technology-ltd/nrfxlib/tree/develop) | [Changes](https://github.com/42-technology-ltd/nrfxlib/compare/v0.6.0...develop))
+### Unreleased Changes ([Source](https://github.com/42-technology-ltd/nrfxlib/tree/develop) | [Changes](https://github.com/42-technology-ltd/nrfxlib/compare/v0.6.1...develop))
 
 * None
+
+### v0.6.1 ([Source](https://github.com/42-technology-ltd/nrfxlib/tree/v0.6.1) | [Changes](https://github.com/42-technology-ltd/nrfxlib/compare/v0.6.0...v0.6.1))
+
+* Fixed a memory ownership issue in `nrf_modem_init`. The `nrf_modem_init_params` pointer given to the init must
+  have a static lifetime. This has been a stack variable since forever.  
+  Originally this seems to have not been required, but this changed +-4 years ago
+  without documentation update from Nordic.
 
 ### v0.6.0 ([Source](https://github.com/42-technology-ltd/nrfxlib/tree/v0.6.0) | [Changes](https://github.com/42-technology-ltd/nrfxlib/compare/v0.5.0...v0.6.0))
 
