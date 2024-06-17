@@ -163,13 +163,12 @@ pub fn init() -> Result<(), Error> {
 		let heap_start = HEAP_MEMORY.as_mut_ptr() as *mut _;
 		let heap_size = HEAP_MEMORY.len() * core::mem::size_of::<u32>();
 		cortex_m::interrupt::free(|cs| {
-			*LIBRARY_ALLOCATOR.borrow(cs).borrow_mut() =
-				Some(Heap::new(heap_start, heap_size))
+			*LIBRARY_ALLOCATOR.borrow(cs).borrow_mut() = Some(Heap::new(heap_start, heap_size))
 		});
 	}
 
 	// Tell nrf_modem what memory it can use.
-	static PARAMS: grounded::uninit::GroundedCell<nrfxlib_sys::nrf_modem_init_params> =
+	static PARAMS: grounded::uninit::GroundedCell<nrfxlib_sys::nrf_modem_init_params_t> =
 		grounded::uninit::GroundedCell::uninit();
 
 	let params = sys::nrf_modem_init_params_t {
